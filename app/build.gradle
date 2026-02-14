@@ -1,0 +1,218 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+
+    defaultConfig {
+        applicationId "com.example.myapplicationnewconver"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation(name: 'DayNightSwitch-1.2', ext: 'aar')
+        api 'com.github.CanHub:Android-Image-Cropper:2.2.0'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-storage'
+   implementation 'com.google.firebase:firebase-auth'
+    implementation platform('com.google.firebase:firebase-bom:31.5.0')
+    implementation 'androidx.multidex:multidex:2.0.1' // أضف هذا الاعتماد
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.wajahatkarim:EasyFlipView:3.0.3'
+
+    
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation 'id.zelory:compressor:2.1.1'
+     //   implementation 'com.google.android.gms:play-services-measurement-base:21.1.0'
+
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation(name: 'meow-bottom-navigation-java-1.2.0', ext: 'aar')
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    //implementation(name: 'souleimanetouch', ext: 'aar')
+    implementation 'com.github.labsisouleimen:TouchFlip3D:v1.1'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta02'
+
+     }
+configurations.all {
+    resolutionStrategy {
+        // إجبار المشروع على استخدام نسخة واحدة من مكتبة الكور الخاصة بكوتلن
+        force "org.jetbrains.kotlin:kotlin-stdlib:1.4.32"
+    }
+}
+apply plugin: 'com.google.gms.google-services'
+    configurations {
+        resolvedApi {
+            canBeResolved = true
+            canBeConsumed = false
+            extendsFrom api
+        }
+    }
+
+   /* task extractAAR(type: Copy) {
+        doFirst {
+            def aarFiles = configurations.resolvedApi.findAll { it.name.contains("Android-Image-Cropper") }
+            from aarFiles
+            into "$buildDir/libs"
+        }
+task extractAAR(type: Copy) {
+    doFirst {
+        def aarFiles = configurations.resolvedApi.findAll()
+        println "Found files: ${aarFiles*.name}" // طباعة أسماء الملفات الموجودة
+        from aarFiles
+        into "$projectDir/libs"
+    }
+}
+*/
+configurations {
+    api {
+        canBeResolved = true  // السماح بالتحليل
+    }
+}
+/*
+task extractAAR(type: Copy) {
+    doFirst {
+        def aarFiles = configurations.runtimeClasspath.filter { it.name.endsWith('.aar') }
+        if (aarFiles.isEmpty()) {
+            println "No AAR files found in dependencies."
+        } else {
+            println "Found AAR files: ${aarFiles*.name}"
+        }
+
+        from aarFiles
+        into "$projectDir/libs"
+    }
+}*/
+/// print the libreray
+/*
+task showDependencies {
+    doLast {
+        configurations.api.each { println "Dependency: ${it.name}" }
+    }
+}*/
+// found aar
+/*
+task showDependencies {
+    doLast {
+        configurations.api.each { dependency ->
+            if (dependency.name.contains("Android-Image-Cropper")) {
+                println "Found AAR: ${dependency.file}"
+            }
+        }
+    }
+}*/
+import org.apache.tools.ant.taskdefs.condition.Os
+
+/*task copyAARToDesktop {
+    doLast {
+        // تحديد مسار سطح المكتب بناءً على نظام التشغيل
+        def desktopPath = Os.isFamily(Os.FAMILY_WINDOWS) ?
+                "${System.env.USERPROFILE}\\Desktop\\MyAARFiles" :
+                "${System.env.HOME}/Desktop/MyAARFiles"
+
+        // التأكد من وجود المجلد أو إنشاؤه
+        def destDir = file(desktopPath)
+        if (!destDir.exists()) {
+            destDir.mkdirs()
+        }
+
+        // تحديد كاش Gradle
+        def gradleCache = file("${gradle.gradleUserHomeDir}/caches/modules-2/files-2.1")
+
+        // البحث عن ملفات AAR
+        gradleCache.eachFileRecurse { file ->
+            if (file.name.endsWith(".aar")) {
+                copy {
+                    from file
+                    into destDir
+                }
+                println "Copied: ${file.name} to ${destDir.absolutePath}"
+            }
+        }
+
+        println "All AAR files have been copied to: ${destDir.absolutePath}"
+    }
+}*/
+task copySpecificAARToProject {
+    doLast {
+        // تحديد اسم المكتبة التي تريد نسخها
+        def libraryName = "Android-Image-Cropper"
+
+        // تحديد كاش Gradle
+        def gradleCache = file("${gradle.gradleUserHomeDir}/caches/modules-2/files-2.1")
+
+        // تحديد المجلد الهدف داخل المشروع
+        def destDir = file("$projectDir/libs")
+        if (!destDir.exists()) {
+            destDir.mkdirs()
+        }
+
+        // البحث عن المكتبة ونسخها
+        boolean libraryFound = false
+        gradleCache.eachFileRecurse { file ->
+            if (file.name.contains(libraryName) && file.name.endsWith(".aar")) {
+                copy {
+                    from file
+                    into destDir
+                }
+                println "Copied: ${file.name} to ${destDir.absolutePath}"
+                libraryFound = true
+            }
+        }
+
+        if (libraryFound) {
+            println "Library $libraryName has been successfully copied to: ${destDir.absolutePath}"
+        } else {
+            println "Library $libraryName not found in Gradle cache."
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
