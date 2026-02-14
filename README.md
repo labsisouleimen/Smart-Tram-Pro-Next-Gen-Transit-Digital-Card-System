@@ -12,7 +12,22 @@
   <img src="https://github.com/user-attachments/assets/64fa2922-2ad8-44af-91bd-ae9424cb6fe1" width="300" alt="SmartTram Demo">
 </p>
 
-<
+
+---
+## Desktop Admin
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f2e8ecf6-246a-40b3-a3f8-da217f779b62" width="300" alt="SmartTram Demo">
+</p>
+
+---
+
+## Secure Tokens
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f422270d-4a65-4275-98bb-51db62b0fdef" width="300" alt="SmartTram Demo">
+</p>
+
+
 ---
 
 ## 🌟 Overview
@@ -38,7 +53,7 @@
 - **Mobile:** Java (Android Studio)
 - **Desktop Admin:** Python & CustomTkinter
 - **Database:** Firebase Realtime Database
-- **Graphics:** Lottie Animations & Custom 3D View Components
+- **Graphics:**  Custom 3D View Components
 - **Encryption:** AES-based Secure Messaging
 
 ---
