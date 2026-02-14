@@ -1,5 +1,5 @@
 # 🚋 SmartTram-Pro: Next-Gen Transit & Digital Card System
-p align="center">
+<p align="center">
   <img src="https://img.shields.io/badge/Platform-Android-brightgreen.svg" alt="Platform">
   <img src="https://img.shields.io/badge/Backend-Python%20%2F%20Firebase-blue.svg" alt="Backend">
   <img src="https://img.shields.io/badge/Security-AES--Encrypted-red.svg" alt="Security">
